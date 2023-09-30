@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://cio3bh7xa7u1p"]
+
+[ext_resource type="Script" path="res://Scripts/game_block.gd" id="1_q07um"]
+[ext_resource type="Shader" path="res://Materials/MapGrid.gdshader" id="2_4ngsj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wbkv7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ubq0d"]
+render_priority = 0
+shader = ExtResource("2_4ngsj")
+shader_parameter/gridSize = 1.0
+shader_parameter/gridThickness = 0.075
+shader_parameter/gridFuzz = 0.005
+shader_parameter/hazard = 0.0
+shader_parameter/gridColor = Color(0, 0.392157, 1, 1)
+shader_parameter/faceColor = Color(0, 0.392157, 1, 0.501961)
+shader_parameter/origin = Vector3(0, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x6snm"]
+material = SubResource("ShaderMaterial_ubq0d")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2bp1n"]
+albedo_color = Color(0, 0.392157, 1, 1)
+metallic = 0.45
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_nwwml"]
+material = SubResource("StandardMaterial3D_2bp1n")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Blue Block" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_q07um")
+color = Color(0, 1, 0, 1)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_wbkv7")
+
+[node name="GameBlock" type="MeshInstance3D" parent="." groups=["Pushables"]]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 0, 0, 0)
+mesh = SubResource("BoxMesh_x6snm")
+skeleton = NodePath("")
+
+[node name="Opaque" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_nwwml")

@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://ce7g5inrvyodd"]
+[gd_scene load_steps=16 format=3 uid="uid://c6bo1k8u1x06p"]
 
-[ext_resource type="Script" path="res://Scripts/world.gd" id="1_4y4ct"]
-[ext_resource type="Script" path="res://Scripts/delete_on_play.gd" id="2_ybvmc"]
-[ext_resource type="Material" uid="uid://b2sfsrg63hppm" path="res://Materials/GridCube_Outside.tres" id="3_4x1a8"]
-[ext_resource type="Material" uid="uid://btcgi3t1radnv" path="res://Materials/GridCube_Inside.tres" id="4_e33to"]
-[ext_resource type="PackedScene" uid="uid://desc6xcium7xp" path="res://Scenes/Collectables/green_collectable.tscn" id="5_2mesj"]
-[ext_resource type="PackedScene" uid="uid://y34dx1g4m7c2" path="res://Scenes/Blocks/game_block_green.tscn" id="7_vdmid"]
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_m5yu8"]
+[ext_resource type="Script" path="res://Scripts/delete_on_play.gd" id="2_f42i8"]
+[ext_resource type="Material" uid="uid://b2sfsrg63hppm" path="res://Materials/GridCube_Outside.tres" id="3_dmpk0"]
+[ext_resource type="Material" uid="uid://btcgi3t1radnv" path="res://Materials/GridCube_Inside.tres" id="4_6p14l"]
+[ext_resource type="PackedScene" uid="uid://y34dx1g4m7c2" path="res://Scenes/Blocks/game_block_green.tscn" id="5_i0kk1"]
+[ext_resource type="PackedScene" uid="uid://c18vbl8clmii7" path="res://Scenes/Blocks/game_block_red.tscn" id="6_s1lfc"]
+[ext_resource type="PackedScene" uid="uid://desc6xcium7xp" path="res://Scenes/Collectables/green_collectable.tscn" id="7_01v5a"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yowko"]
 albedo_color = Color(1, 0, 0, 1)
@@ -35,19 +36,19 @@ bottom_radius = 0.25
 height = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_rwvfy"]
-material = ExtResource("3_4x1a8")
+material = ExtResource("3_dmpk0")
 size = Vector3(7, 7, 7)
 
 [sub_resource type="BoxMesh" id="BoxMesh_a1bof"]
-material = ExtResource("4_e33to")
+material = ExtResource("4_6p14l")
 flip_faces = true
 size = Vector3(7, 7, 7)
 
-[node name="Level1" type="Node3D"]
-script = ExtResource("1_4y4ct")
+[node name="Level3" type="Node3D"]
+script = ExtResource("1_m5yu8")
 
 [node name="DeleteOnPlay" type="Node3D" parent="."]
-script = ExtResource("2_ybvmc")
+script = ExtResource("2_f42i8")
 metadata/_edit_group_ = true
 
 [node name="Arrow Red" type="MeshInstance3D" parent="DeleteOnPlay"]
@@ -76,16 +77,20 @@ mesh = SubResource("BoxMesh_rwvfy")
 [node name="Inside" type="MeshInstance3D" parent="DeleteOnPlay/MockMapCube"]
 mesh = SubResource("BoxMesh_a1bof")
 
-[node name="Green Block" parent="." node_paths=PackedStringArray("world") instance=ExtResource("7_vdmid")]
+[node name="Green Block" parent="." instance=ExtResource("5_i0kk1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, 0)
-world = NodePath("..")
 
-[node name="Green Surface Block" parent="." node_paths=PackedStringArray("world") instance=ExtResource("7_vdmid")]
+[node name="Green Surface Block" parent="." instance=ExtResource("5_i0kk1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 4, 0)
-world = NodePath("..")
 
-[node name="Collectable" parent="." instance=ExtResource("5_2mesj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -7.45058e-08)
-
-[node name="Collectable3" parent="." instance=ExtResource("5_2mesj")]
+[node name="Red Block" parent="." instance=ExtResource("6_s1lfc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Red Block2" parent="." instance=ExtResource("6_s1lfc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 1)
+
+[node name="Red Block3" parent="." instance=ExtResource("6_s1lfc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -1)
+
+[node name="Collectable" parent="." instance=ExtResource("7_01v5a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -7.45058e-08)

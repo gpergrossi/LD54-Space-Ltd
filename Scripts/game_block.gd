@@ -2,14 +2,14 @@ extends CharacterBody3D
 
 class_name GameBlock
 
-@export var world : World
+var world : World
 @export var color : Color
 
 var game_pos : Vector3i
 var game_face : DEFS.CubeFace
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func init_block():
 	game_pos = round(position / world.TileSize);
 	
 	game_face = DEFS.CubeFace.NONE

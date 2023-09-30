@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c3p6v6ekdbi8q"]
+
+[ext_resource type="FontFile" uid="uid://dxfgiwlnimbpr" path="res://Scenes/UI/RubikMonoOne-Regular.ttf" id="1_vp76e"]
+
+[resource]
+default_font = ExtResource("1_vp76e")
+default_font_size = 24

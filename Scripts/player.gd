@@ -14,18 +14,31 @@ var game_facing : float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	game_face = DEFS.CubeFace.TOP
-	game_pos = world.to_pos(world.to_coord(position))
-	game_facing = 0
-	
-	position = compute_origin(game_face, game_pos)
-	game_basis = Basis.IDENTITY
+	reset()
+
+func reset():
+	if is_instance_valid(world):
+		# Set position first
+		position = compute_origin(DEFS.CubeFace.TOP, Vector3(0,0,0))
+		
+		# Use it to determine game_pos
+		game_face = DEFS.CubeFace.TOP
+		game_pos = world.to_pos(world.to_coord(position))
+		game_basis = Basis.IDENTITY
+		game_facing = 0
+		
+		# Now set rotations
+		basis = game_basis
+		body.basis = Basis(Vector3.UP, deg_to_rad(game_facing))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):
 	pass
 	
 func _physics_process(_delta : float) -> void:
+	if !is_instance_valid(world):
+		return
+		
 	var moveAxis : Vector3 = Vector3.ZERO;
 	
 	if Input.is_action_just_pressed("move_up"):
@@ -207,9 +220,8 @@ func check_push(player_pos : Vector3, push_vec : Vector3) -> bool:
 		int(round(push_vec.z / world.TileSize))
 	)
 	
-	var pushables = get_tree().get_nodes_in_group("GameBlocks")
-	for pushable in pushables:
-		var success = pushable.check_push(player_pos_i, push_vec_i)
+	for block in world.allBlocks:
+		var success = block.check_push(player_pos_i, push_vec_i)
 		if success:
 			return true
 	

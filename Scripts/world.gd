@@ -15,6 +15,8 @@ var pendingMoves : Array
 
 var remainingCollectables : int = 0
 
+var main : MainScript
+
 func get_extent():
 	return Size / 2.0
 	
@@ -42,8 +44,12 @@ func _ready():
 	for child in get_children():
 		if child is GameBlock:
 			var block = child as GameBlock
+			block.world = self
+			block.init_block()
+			
 			var pos = block.game_pos
 			allBlocks.append(block)
+			
 			var coord = to_coord(pos)
 			blockLookup[coord.x][coord.y][coord.z] = block
 			print("Placed a block at ", coord, " (color ", block.color, ")")
@@ -56,17 +62,12 @@ func _ready():
 			
 	pendingMoves = Array()
 	
-	print("Built level with ", count, " blocks")
+	print("Built level with ", count, " blocks and ", remainingCollectables, " collectables")
 			
 func on_collectable_collected():
 	remainingCollectables -= 1
-	if (remainingCollectables == 0):
-		# TODO: Do something cool
-		pass
-			
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
+	if (remainingCollectables <= 0):
+		main.doVictory()
 
 func in_range(tilePos : Vector3, face : DEFS.CubeFace = DEFS.CubeFace.NONE, margin : float = 0) -> bool:
 	
