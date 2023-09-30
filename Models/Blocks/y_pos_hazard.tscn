@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg6glba7wjhpl"]
+
+[ext_resource type="Material" uid="uid://bd37t71tp72kg" path="res://Materials/GridCube_Inside_Hazard.tres" id="1_2hp1v"]
+[ext_resource type="Material" uid="uid://6fn7eji80cw3" path="res://Materials/GridCube_Outside_Hazard.tres" id="2_4m0xl"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j8ipd"]
+material = ExtResource("2_4m0xl")
+size = Vector2(1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jtdtv"]
+material = ExtResource("1_2hp1v")
+size = Vector2(1, 1)
+
+[node name="Y+ Outside Hazard" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("PlaneMesh_j8ipd")
+
+[node name="Y+ Inside Hazard" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
+mesh = SubResource("PlaneMesh_jtdtv")

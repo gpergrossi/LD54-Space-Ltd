@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bd37t71tp72kg"]
+
+[ext_resource type="Shader" path="res://Materials/MapGrid.gdshader" id="1_alee4"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_alee4")
+shader_parameter/gridSize = 1.0
+shader_parameter/gridThickness = 0.025
+shader_parameter/gridFuzz = 0.01
+shader_parameter/hazard = 1.0
+shader_parameter/gridColor = Color(0.0941176, 0.188235, 0.235294, 1)
+shader_parameter/faceColor = Color(0.0941176, 0.188235, 0.235294, 0.392157)
+shader_parameter/origin = Vector3(0, 0, 0)

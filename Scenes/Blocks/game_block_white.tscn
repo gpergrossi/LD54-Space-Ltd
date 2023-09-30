@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://d6shy3xg3m4x"]
+
+[ext_resource type="Material" uid="uid://bkthj33ek3ori" path="res://Materials/Game_Block_White_Material.tres" id="1_at0sa"]
+[ext_resource type="Script" path="res://Scripts/game_block.gd" id="2_w731v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wbkv7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_x6snm"]
+material = ExtResource("1_at0sa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iuk25"]
+metallic = 0.45
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_t6lvr"]
+material = SubResource("StandardMaterial3D_iuk25")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="White Block" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("2_w731v")
+color = Color(1, 1, 1, 1)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_wbkv7")
+
+[node name="GameBlock" type="MeshInstance3D" parent="." groups=["Pushables"]]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 0, 0, 0)
+mesh = SubResource("BoxMesh_x6snm")
+skeleton = NodePath("")
+
+[node name="Opaque" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_t6lvr")

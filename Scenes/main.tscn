@@ -2,23 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://xso1xx55wcpr" path="res://Scenes/space_scene.tscn" id="1_12kei"]
 [ext_resource type="PackedScene" uid="uid://cwdfrmj5umm4v" path="res://Scenes/player.tscn" id="1_nxy2d"]
-[ext_resource type="Script" path="res://Scripts/camera.gd" id="3_hkb17"]
+[ext_resource type="PackedScene" uid="uid://ce7g5inrvyodd" path="res://Scenes/Levels/Level1.tscn" id="4_yqgjb"]
 
-[node name="World" type="Node3D"]
+[node name="Main" type="Node3D"]
 
 [node name="Space Scene" parent="." instance=ExtResource("1_12kei")]
-
-[node name="Player" parent="." instance=ExtResource("1_nxy2d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0247514, 0.266875, -0.034559)
-
-[node name="Camera Orbit Arm" type="SpringArm3D" parent="."]
-collision_mask = 0
-spring_length = 6.0
-script = ExtResource("3_hkb17")
-
-[node name="Camera3D" type="Camera3D" parent="Camera Orbit Arm"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18907, 4.89807)
-fov = 60.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -28,3 +16,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Player" parent="." node_paths=PackedStringArray("world") instance=ExtResource("1_nxy2d")]
+world = NodePath("../TestLevel1")
+
+[node name="TestLevel1" parent="." instance=ExtResource("4_yqgjb")]

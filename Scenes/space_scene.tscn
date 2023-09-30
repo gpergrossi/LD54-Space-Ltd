@@ -54,6 +54,9 @@ color_ramp = SubResource("GradientTexture1D_uo13v")
 
 [sub_resource type="Environment" id="Environment_54egh"]
 background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.513726, 0.513726, 0.513726, 1)
+ambient_light_energy = 2.66
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_3ry18"]
 
@@ -309,8 +312,10 @@ mesh = SubResource("CylinderMesh_05e0j")
 
 [node name="Galaxy" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.56849, 0.82269, 0, -0.82269, 0.56849, 0, 0, 0, 1, 0, 0, 0)
+sorting_offset = -10000.0
 mesh = SubResource("CylinderMesh_kri1j")
 
 [node name="Galaxy Details" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.56849, 0.82269, 0, -0.82269, 0.56849, 0, 0, 0, 1, 0, 0, 0)
+sorting_offset = -10000.0
 mesh = SubResource("CylinderMesh_03ch7")

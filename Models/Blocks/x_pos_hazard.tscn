@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwkp6txoob55n"]
+
+[ext_resource type="Material" uid="uid://bd37t71tp72kg" path="res://Materials/GridCube_Inside_Hazard.tres" id="1_h7ify"]
+[ext_resource type="Material" uid="uid://6fn7eji80cw3" path="res://Materials/GridCube_Outside_Hazard.tres" id="2_s3n5q"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cjaum"]
+material = ExtResource("2_s3n5q")
+size = Vector2(1, 1)
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qpg2d"]
+material = ExtResource("1_h7ify")
+size = Vector2(1, 1)
+orientation = 0
+
+[node name="X_Pos_Outside_Hazard" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("PlaneMesh_cjaum")
+
+[node name="X_Pos_Inside_Hazard" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("PlaneMesh_qpg2d")

@@ -1,0 +1,120 @@
+[gd_scene load_steps=18 format=3 uid="uid://iigcfaxpxsa1"]
+
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_5bw1b"]
+[ext_resource type="Shader" path="res://Scenes/Levels/MapGrid.gdshader" id="2_omvcb"]
+[ext_resource type="Script" path="res://Scripts/pushable.gd" id="3_xw03q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yowko"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_30y8p"]
+material = SubResource("StandardMaterial3D_yowko")
+top_radius = 0.0
+bottom_radius = 0.25
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgcgd"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yfb82"]
+material = SubResource("StandardMaterial3D_hgcgd")
+top_radius = 0.0
+bottom_radius = 0.25
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wpjnr"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_deykk"]
+material = SubResource("StandardMaterial3D_wpjnr")
+top_radius = 0.0
+bottom_radius = 0.25
+height = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhr2b"]
+render_priority = 0
+shader = ExtResource("2_omvcb")
+shader_parameter/gridSize = 1.0
+shader_parameter/gridThickness = 0.05
+shader_parameter/gridFuzz = 0.01
+shader_parameter/gridColor = Color(0, 1, 0.833333, 0.501961)
+shader_parameter/faceColor = Color(1, 1, 1, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v2det"]
+material = SubResource("ShaderMaterial_jhr2b")
+size = Vector3(7, 7, 7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y8fuo"]
+render_priority = 0
+shader = ExtResource("2_omvcb")
+shader_parameter/gridSize = 1.0
+shader_parameter/gridThickness = 0.025
+shader_parameter/gridFuzz = 0.001
+shader_parameter/gridColor = Color(0, 1, 0.784314, 0.235294)
+shader_parameter/faceColor = Color(0, 1, 0.784314, 0.117647)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tabsb"]
+material = SubResource("ShaderMaterial_y8fuo")
+flip_faces = true
+size = Vector3(7, 7, 7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yo3sl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wbkv7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j06yj"]
+render_priority = 0
+shader = ExtResource("2_omvcb")
+shader_parameter/gridSize = 1.0
+shader_parameter/gridThickness = 0.075
+shader_parameter/gridFuzz = 0.005
+shader_parameter/gridColor = Color(1, 1, 1, 1)
+shader_parameter/faceColor = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tf784"]
+material = SubResource("ShaderMaterial_j06yj")
+
+[node name="TestLevel" type="Node3D"]
+script = ExtResource("1_5bw1b")
+
+[node name="Arrow Red" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("CylinderMesh_30y8p")
+skeleton = NodePath("../..")
+
+[node name="Arrow Green" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_yfb82")
+skeleton = NodePath("../..")
+
+[node name="Arrow Blue" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.5)
+mesh = SubResource("CylinderMesh_deykk")
+skeleton = NodePath("../..")
+
+[node name="Outside" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_v2det")
+
+[node name="Inside" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_tabsb")
+
+[node name="Solid Object" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, -2, 4, 0)
+mesh = SubResource("BoxMesh_yo3sl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Solid Object"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Solid Object/StaticBody3D"]
+shape = SubResource("BoxShape3D_wbkv7")
+
+[node name="Pushable Object" type="MeshInstance3D" parent="." node_paths=PackedStringArray("world") groups=["Pushables"]]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 1, 4, 0)
+mesh = SubResource("BoxMesh_tf784")
+skeleton = NodePath("../Solid Object")
+script = ExtResource("3_xw03q")
+world = NodePath("..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Pushable Object"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pushable Object/StaticBody3D"]
+shape = SubResource("BoxShape3D_wbkv7")

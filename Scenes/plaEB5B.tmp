@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwdfrmj5umm4v"]
 
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_m70j5"]
-[ext_resource type="Script" path="res://Scripts/player.gd" id="1_np7qj"]
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_np7qj"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_j1yrr"]
 radius = 0.25
@@ -15,18 +15,15 @@ radius = 0.25
 height = 1.0
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-collision_mask = 6
 script = ExtResource("1_np7qj")
 metadata/_edit_group_ = true
 
-[node name="Body" type="Node3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("CapsuleMesh_j1yrr")
 skeleton = NodePath("")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Body"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.600145, -0.274296)
 mesh = SubResource("BoxMesh_rtyr8")
 skeleton = NodePath("")
