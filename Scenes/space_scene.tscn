@@ -1,0 +1,316 @@
+[gd_scene load_steps=46 format=3 uid="uid://xso1xx55wcpr"]
+
+[sub_resource type="Gradient" id="Gradient_thddu"]
+offsets = PackedFloat32Array(0, 0.252033, 0.772358, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uo13v"]
+gradient = SubResource("Gradient_thddu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_75q6q"]
+emission_shape = 2
+emission_sphere_radius = 4096.0
+gravity = Vector3(0, 0, 0)
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_uo13v")
+
+[sub_resource type="Gradient" id="Gradient_e0gro"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ff80u"]
+gradient = SubResource("Gradient_e0gro")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwwci"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_ff80u")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bwlk5"]
+material = SubResource("StandardMaterial3D_xwwci")
+size = Vector2(10, 10)
+orientation = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_njkt6"]
+emission_shape = 2
+emission_sphere_radius = 3072.0
+gravity = Vector3(0, 0, 0)
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_uo13v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_14kbw"]
+emission_shape = 2
+emission_sphere_radius = 2048.0
+gravity = Vector3(0, 0, 0)
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_uo13v")
+
+[sub_resource type="Environment" id="Environment_54egh"]
+background_mode = 1
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_3ry18"]
+
+[sub_resource type="Gradient" id="Gradient_82nbv"]
+offsets = PackedFloat32Array(0, 0.314961, 0.566929, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0.251413, 0.253976, 1, 0, 0.317647, 0.411765, 1, 0.682353, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vo4vu"]
+gradient = SubResource("Gradient_82nbv")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0.284211)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yk4ux"]
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_vo4vu")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gxtwt"]
+material = SubResource("StandardMaterial3D_yk4ux")
+top_radius = 200.0
+bottom_radius = 200.0
+height = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ucjoy"]
+offsets = PackedFloat32Array(0, 0.456693, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.905512, 0.905512, 0.905512, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n6uik"]
+gradient = SubResource("Gradient_ucjoy")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cc52t"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.172549, 0.403922, 0.662745, 1)
+albedo_texture = SubResource("GradientTexture2D_n6uik")
+
+[sub_resource type="TorusMesh" id="TorusMesh_sgg5f"]
+material = SubResource("StandardMaterial3D_cc52t")
+inner_radius = 250.0
+outer_radius = 350.0
+
+[sub_resource type="Gradient" id="Gradient_aabh8"]
+offsets = PackedFloat32Array(0, 0.283465, 0.598425, 0.685039)
+colors = PackedColorArray(0.607843, 0, 0, 1, 1, 0.227451, 0, 1, 1, 0.592157, 0, 1, 0.996078, 0.839216, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mroqk"]
+gradient = SubResource("Gradient_aabh8")
+fill_from = Vector2(0.368421, 0.805263)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bq3gb"]
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_mroqk")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0gv1h"]
+material = SubResource("StandardMaterial3D_bq3gb")
+top_radius = 50.0
+bottom_radius = 50.0
+height = 1.0
+
+[sub_resource type="Gradient" id="Gradient_vkveb"]
+offsets = PackedFloat32Array(0.385827, 0.511811, 0.677165, 0.795276, 0.929134)
+colors = PackedColorArray(1, 1, 1, 1, 0.576923, 0.576923, 0.576923, 1, 0.158189, 0.158189, 0.158189, 1, 0.0543773, 0.0543773, 0.0543773, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2eh0f"]
+gradient = SubResource("Gradient_vkveb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c75pl"]
+transparency = 2
+alpha_scissor_threshold = 0.467
+alpha_antialiasing_mode = 0
+blend_mode = 1
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_2eh0f")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_xobmv"]
+material = SubResource("StandardMaterial3D_c75pl")
+size = Vector2(2000, 2000)
+
+[sub_resource type="Gradient" id="Gradient_q6veq"]
+offsets = PackedFloat32Array(0.472441, 0.527559)
+colors = PackedColorArray(0, 0.337255, 1, 1, 0, 0.556863, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_byris"]
+seed = 5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vqvjp"]
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 0.353
+color_ramp = SubResource("Gradient_q6veq")
+noise = SubResource("FastNoiseLite_byris")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s5i5k"]
+shading_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_vqvjp")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xnnbi"]
+material = SubResource("StandardMaterial3D_s5i5k")
+top_radius = 200.0
+bottom_radius = 200.0
+height = 1.0
+
+[sub_resource type="Gradient" id="Gradient_i2g8t"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rjo6j"]
+gradient = SubResource("Gradient_i2g8t")
+fill = 1
+fill_from = Vector2(0.173684, 0.768421)
+fill_to = Vector2(0.263158, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ivb6d"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_rjo6j")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_05e0j"]
+material = SubResource("StandardMaterial3D_ivb6d")
+top_radius = 240.0
+bottom_radius = 240.0
+height = 1.0
+
+[sub_resource type="Gradient" id="Gradient_dhqag"]
+offsets = PackedFloat32Array(0, 0.133858, 0.212598, 0.237205, 0.259843, 0.346457, 0.491142)
+colors = PackedColorArray(0, 0, 0, 1, 0.157706, 0.157706, 0.157706, 1, 0.387097, 0.387097, 0.387097, 1, 0.466181, 0.466181, 0.466181, 1, 0.40625, 0.40625, 0.40625, 1, 0.1625, 0.1625, 0.1625, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7fpb0"]
+gradient = SubResource("Gradient_dhqag")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kq6ao"]
+shading_mode = 0
+albedo_color = Color(0, 0.576471, 0.486275, 1)
+albedo_texture = SubResource("GradientTexture2D_7fpb0")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kri1j"]
+material = SubResource("StandardMaterial3D_kq6ao")
+flip_faces = true
+top_radius = 3000.0
+bottom_radius = 3000.0
+height = 1000.0
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="Gradient" id="Gradient_nr6v6"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d8an0"]
+seed = 3
+frequency = 0.0582
+fractal_octaves = 2
+domain_warp_enabled = true
+domain_warp_amplitude = 10.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bxtak"]
+width = 2048
+height = 128
+in_3d_space = true
+color_ramp = SubResource("Gradient_nr6v6")
+noise = SubResource("FastNoiseLite_d8an0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57nl6"]
+blend_mode = 3
+shading_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_bxtak")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_03ch7"]
+material = SubResource("StandardMaterial3D_57nl6")
+flip_faces = true
+top_radius = 2900.0
+bottom_radius = 2900.0
+height = 1200.0
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[node name="Space Scene" type="Node3D"]
+
+[node name="Outer Stars" type="GPUParticles3D" parent="."]
+amount = 1000
+lifetime = 5.0
+preprocess = 10.0
+visibility_aabb = AABB(-40, -40, -40, 80, 80, 80)
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_75q6q")
+draw_pass_1 = SubResource("PlaneMesh_bwlk5")
+
+[node name="Middle Stars" type="GPUParticles3D" parent="."]
+amount = 1000
+lifetime = 5.0
+preprocess = 10.0
+visibility_aabb = AABB(-40, -40, -40, 80, 80, 80)
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_njkt6")
+draw_pass_1 = SubResource("PlaneMesh_bwlk5")
+
+[node name="Inner Stars" type="GPUParticles3D" parent="."]
+amount = 1000
+lifetime = 5.0
+preprocess = 10.0
+visibility_aabb = AABB(-40, -40, -40, 80, 80, 80)
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_14kbw")
+draw_pass_1 = SubResource("PlaneMesh_bwlk5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_54egh")
+camera_attributes = SubResource("CameraAttributesPractical_3ry18")
+
+[node name="Blue Planet" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.619706, 0.734305, 0.277058, -0.154053, 0.459956, -0.874476, -0.769567, 0.499237, 0.398159, -850.163, -625.246, -542.625)
+mesh = SubResource("CylinderMesh_gxtwt")
+
+[node name="Blue Planet Ring" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0925855, -0.0169393, -0.936298, 0.0185953, 0.047038, -0.338561, 0.995531, 0.00069675, 0.0934006, -837.866, -605.714, -532.792)
+mesh = SubResource("TorusMesh_sgg5f")
+
+[node name="Blue Dir Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.621967, 0.474415, -0.622967, 0.0382882, -0.813045, -0.58094, -0.782107, 0.337473, -0.523852, -166.8, -163.467, -118.911)
+light_color = Color(0, 0.423529, 0.670588, 1)
+
+[node name="Orange Planet" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.461594, -0.662634, -0.589786, 0.253429, -0.538641, 0.803517, -0.85012, -0.520367, -0.0807029, 372.539, 136.408, 350.404)
+mesh = SubResource("CylinderMesh_0gv1h")
+skeleton = NodePath("../..")
+
+[node name="Orange Dir Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.86537, 0.501133, 0, -0.501133, 0.86537, 0, 2.16494, 8.57071)
+light_color = Color(1, 0.368627, 0, 1)
+
+[node name="Sun Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.537102, -0.0603871, -0.841353, -0.624176, -0.642463, 0.444573, -0.567385, 0.763933, 0.307376, -12.6797, 7.61942, 14.9026)
+light_color = Color(1, 0.862745, 0.741176, 1)
+light_energy = 4.0
+
+[node name="Sun Glow" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.533882, -0.485186, 0.692507, -0.731449, -0.145878, -0.666109, 0.424208, -0.862157, -0.277007, -2859.37, 1530.88, 1001.4)
+mesh = SubResource("QuadMesh_xobmv")
+
+[node name="Earth Planet" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.729297, -0.673435, 0.120875, -0.325971, -0.49732, -0.804, 0.601555, 0.546953, -0.582214, 374.557, 70.0597, -316.052)
+mesh = SubResource("CylinderMesh_xnnbi")
+
+[node name="Earth Planet Shading" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.729297, -0.673435, 0.120875, -0.325971, -0.49732, -0.804, 0.601555, 0.546953, -0.582214, 358.637, 74.2746, -303.637)
+sorting_offset = -1000.0
+mesh = SubResource("CylinderMesh_05e0j")
+
+[node name="Galaxy" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56849, 0.82269, 0, -0.82269, 0.56849, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_kri1j")
+
+[node name="Galaxy Details" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56849, 0.82269, 0, -0.82269, 0.56849, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_03ch7")
