@@ -1,6 +1,4 @@
-extends Node3D
-
-class_name MainScript
+class_name MainScript extends Node3D
 
 var currentLevel = 0
 var currentLevelInstance = null
@@ -10,14 +8,15 @@ var currentLevelInstance = null
 @export var victory_ui : VictoryScreen
 @export var title_ui : TitleScreen
 @export var instructions_ui : InstructionsScreen
+@export var final_victory_ui : FinalVictoryScreen
 
 var levels = Array([
-		"res://Scenes/Levels/Level0.tscn",
-		"res://Scenes/Levels/Level1.tscn",
-		"res://Scenes/Levels/Level2.tscn",
-		"res://Scenes/Levels/Level3.tscn",
-		"res://Scenes/Levels/Level4.tscn",
-		"res://Scenes/Levels/Level5.tscn"
+		preload("res://Scenes/Levels/Level0.tscn"),
+		preload("res://Scenes/Levels/Level1.tscn"),
+		preload("res://Scenes/Levels/Level2.tscn"),
+		preload("res://Scenes/Levels/Level3.tscn"),
+		preload("res://Scenes/Levels/Level4.tscn"),
+		preload("res://Scenes/Levels/Level5.tscn")
 	])
 
 var passwords = Array(
@@ -32,6 +31,7 @@ func _ready():
 	victory_ui.hide_ui()
 	settings_ui.hide_ui()
 	instructions_ui.hide_ui()
+	final_victory_ui.hide_ui()
 	settings_pause_input = false
 	settings_ui.canvas.connect("visibility_changed", on_canvas_hide_show)
 
@@ -57,16 +57,17 @@ func _input(_event):
 func on_canvas_hide_show():
 	settings_pause_input = settings_ui.canvas.visible
 
-func switchLevel(levelScenePath):
+func switchLevel(levelScene):
 	if is_instance_valid(currentLevelInstance):
 		currentLevelInstance.queue_free()
 	
-	var levelScene = load(levelScenePath)
 	currentLevelInstance = levelScene.instantiate()
-	currentLevelInstance.main = self
-	add_child(currentLevelInstance);
-	player.world = currentLevelInstance
-	player.reset()
+	
+	if currentLevelInstance is World:
+		currentLevelInstance.main = self
+		add_child(currentLevelInstance);
+		player.world = currentLevelInstance
+		player.reset()
 
 func doVictory():
 	print("You win!")
@@ -78,6 +79,7 @@ func nextLevel():
 		currentLevel += 1
 	else:
 		print("No more levels!")
+		final_victory_ui.show_ui()
 
 func quit():
 	get_tree().quit()

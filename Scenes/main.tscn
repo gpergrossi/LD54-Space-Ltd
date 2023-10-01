@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bl27qf60r1tbl"]
+[gd_scene load_steps=10 format=3 uid="uid://bl27qf60r1tbl"]
 
 [ext_resource type="PackedScene" uid="uid://xso1xx55wcpr" path="res://Scenes/Environment/space_scene.tscn" id="1_12kei"]
 [ext_resource type="PackedScene" uid="uid://cwdfrmj5umm4v" path="res://Scenes/player.tscn" id="1_nxy2d"]
@@ -8,14 +8,16 @@
 [ext_resource type="PackedScene" uid="uid://5r1xqufbd5q7" path="res://Scenes/UI/victory_screen.tscn" id="6_ljhi6"]
 [ext_resource type="PackedScene" uid="uid://bn0apheil0h7c" path="res://Scenes/UI/title_scene.tscn" id="7_wni0b"]
 [ext_resource type="PackedScene" uid="uid://0hpfl6wcdkmi" path="res://Scenes/UI/instructions_screen.tscn" id="8_gw6to"]
+[ext_resource type="PackedScene" uid="uid://c8b4f41gnmap0" path="res://Scenes/FinalVictory.tscn" id="9_hvj2t"]
 
-[node name="Main" type="Node3D" node_paths=PackedStringArray("player", "settings_ui", "victory_ui", "title_ui", "instructions_ui")]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("player", "settings_ui", "victory_ui", "title_ui", "instructions_ui", "final_victory_ui")]
 script = ExtResource("1_rvkor")
 player = NodePath("Player")
 settings_ui = NodePath("Settings Scene")
 victory_ui = NodePath("VictoryScreen")
 title_ui = NodePath("Title Scene")
 instructions_ui = NodePath("InstructionsScreen")
+final_victory_ui = NodePath("FinalVictory")
 
 [node name="Space Scene" parent="." instance=ExtResource("1_12kei")]
 transform = Transform3D(0.085417, 0, -0.996345, 0, 1, 0, 0.996345, 0, 0.085417, 0, 0, 0)
@@ -46,3 +48,5 @@ main = NodePath("..")
 main = NodePath("..")
 
 [node name="InstructionsScreen" parent="." instance=ExtResource("8_gw6to")]
+
+[node name="FinalVictory" parent="." instance=ExtResource("9_hvj2t")]

@@ -56,11 +56,15 @@ func reset():
 		basis = game_basis
 		body.basis = Basis(Vector3.UP, deg_to_rad(game_facing))
 		
+		# Stop previous moving animation
+		move_time = 0
+		
 		# Begin spawn animation
 		time = 0
 		spawn_position = position
 		position += basis.y * spawn_anim_height
 		spawn_anim_disable_controls = true
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta : float):
@@ -77,6 +81,21 @@ func _process(delta : float):
 		body.basis = Basis(Vector3.UP, deg_to_rad(game_facing)).rotated(body.basis.z.normalized(), tilt)
 		body.position = body.basis.y * sin(moveT * PI) * move_hop_height
 		
+		if move_time <= 0:
+			transform = move_to
+	
+	elif time > spawn_anim_start_time + spawn_anim_duration: 
+		# Fix position
+		if is_instance_valid(world):
+			if not game_basis.y.is_equal_approx(get_face_vec(game_face)):
+				print("Fixing buggy basis!")
+				fix_basis()
+			
+			var floorY = position.dot(game_basis.y)
+			if not is_equal_approx(floorY, world.Extent):
+				print("Fixing buggy position: ", floorY, " != ", world.Extent)
+				fix_basis()
+		
 	if time > spawn_anim_start_time + spawn_anim_duration:
 		spawn_anim_disable_controls = false
 	else:
@@ -89,7 +108,29 @@ func _process(delta : float):
 			
 			var s = 1 - t
 			body.scale = Vector3(s, s, s)
-		
+
+# For when shit gets weird
+func fix_basis():
+	print("Fixed buggy position!")
+	
+	var up = get_face_vec(game_face)
+	if up == Vector3.UP:
+		game_basis = Basis()
+	elif up == Vector3.DOWN:
+		game_basis = Basis(Vector3.BACK, PI)
+	elif up == Vector3.LEFT:
+		game_basis = Basis(Vector3.BACK, PI/2)
+	elif up == Vector3.RIGHT:
+		game_basis = Basis(Vector3.BACK, -PI/2)
+	elif up == Vector3.BACK:
+		game_basis = Basis(Vector3.RIGHT, PI/2)
+	elif up == Vector3.FORWARD:
+		game_basis = Basis(Vector3.RIGHT, -PI/2)
+	
+	basis = game_basis
+	body.basis = Basis(Vector3.UP, deg_to_rad(game_facing))
+	position = compute_origin(game_face, game_pos)
+
 func ease_in_quad(x : float) -> float:
 	return pow(1 - x, 2);
 	
@@ -224,6 +265,9 @@ func _physics_process(_delta : float) -> void:
 		game_basis = game_basis.rotated(vertEdgeRotationAxis, deg_to_rad(90))
 		game_face = faceVertMax
 		didRotate = true
+	
+	if didRotate:
+		game_basis = game_basis.orthonormalized()
 	
 	# Clamp positions AFTER transferring faces
 	game_pos.x = clamp(game_pos.x, -world.MaxTile, world.MaxTile)
