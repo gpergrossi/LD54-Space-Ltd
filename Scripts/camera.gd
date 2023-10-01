@@ -7,7 +7,7 @@ var rotation_x : float = -60
 
 var current_zoom : float = 1.0
 var min_zoom : float = 0.5
-var max_zoom : float = 1.0
+var max_zoom : float = 1.5
 var zoom_change : float = 0.1
 
 @onready var base_spring_length = spring_length

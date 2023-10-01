@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://xso1xx55wcpr"]
+[gd_scene load_steps=45 format=3 uid="uid://xso1xx55wcpr"]
 
 [sub_resource type="Gradient" id="Gradient_thddu"]
 offsets = PackedFloat32Array(0, 0.252033, 0.772358, 1)
@@ -7,9 +7,9 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_uo13v"]
 gradient = SubResource("Gradient_thddu")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_75q6q"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_njkt6"]
 emission_shape = 2
-emission_sphere_radius = 4096.0
+emission_sphere_radius = 3072.0
 gravity = Vector3(0, 0, 0)
 scale_max = 10.0
 color_ramp = SubResource("GradientTexture1D_uo13v")
@@ -38,13 +38,6 @@ material = SubResource("StandardMaterial3D_xwwci")
 size = Vector2(10, 10)
 orientation = 2
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_njkt6"]
-emission_shape = 2
-emission_sphere_radius = 3072.0
-gravity = Vector3(0, 0, 0)
-scale_max = 10.0
-color_ramp = SubResource("GradientTexture1D_uo13v")
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_14kbw"]
 emission_shape = 2
 emission_sphere_radius = 2048.0
@@ -57,6 +50,7 @@ background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.513726, 0.513726, 0.513726, 1)
 ambient_light_energy = 2.66
+tonemap_mode = 1
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_3ry18"]
 
@@ -241,19 +235,7 @@ cap_bottom = false
 [node name="Space Scene" type="Node3D"]
 
 [node name="Outer Stars" type="GPUParticles3D" parent="."]
-amount = 1000
-lifetime = 5.0
-preprocess = 10.0
-fixed_fps = 20
-interpolate = false
-fract_delta = false
-visibility_aabb = AABB(-40, -40, -40, 80, 80, 80)
-transform_align = 3
-process_material = SubResource("ParticleProcessMaterial_75q6q")
-draw_pass_1 = SubResource("PlaneMesh_bwlk5")
-
-[node name="Middle Stars" type="GPUParticles3D" parent="."]
-amount = 1000
+amount = 800
 lifetime = 5.0
 preprocess = 10.0
 fixed_fps = 20
@@ -265,7 +247,7 @@ process_material = SubResource("ParticleProcessMaterial_njkt6")
 draw_pass_1 = SubResource("PlaneMesh_bwlk5")
 
 [node name="Inner Stars" type="GPUParticles3D" parent="."]
-amount = 1000
+amount = 800
 lifetime = 5.0
 preprocess = 10.0
 fixed_fps = 20
@@ -298,8 +280,9 @@ mesh = SubResource("CylinderMesh_0gv1h")
 skeleton = NodePath("../..")
 
 [node name="Orange Dir Light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.86537, 0.501133, 0, -0.501133, 0.86537, 0, 2.16494, 8.57071)
+transform = Transform3D(0.686285, -0.184756, 0.703475, 0.00517068, 0.968414, 0.249294, -0.727314, -0.167449, 0.665564, 9.10649, 3.6077, 8.44495)
 light_color = Color(1, 0.368627, 0, 1)
+light_energy = 0.8
 
 [node name="Sun Light" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.537102, -0.0603871, -0.841353, -0.624176, -0.642463, 0.444573, -0.567385, 0.763933, 0.307376, -12.6797, 7.61942, 14.9026)

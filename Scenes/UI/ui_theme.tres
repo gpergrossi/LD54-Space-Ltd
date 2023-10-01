@@ -1,7 +1,33 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c3p6v6ekdbi8q"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c3p6v6ekdbi8q"]
 
 [ext_resource type="FontFile" uid="uid://dxfgiwlnimbpr" path="res://Scenes/UI/RubikMonoOne-Regular.ttf" id="1_vp76e"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udmfb"]
+bg_color = Color(0.768627, 0.545098, 0.388235, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ud7hl"]
+bg_color = Color(0.529412, 0.615686, 0.654902, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hduk"]
+bg_color = Color(0.576471, 0.388235, 0.25098, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
 [resource]
 default_font = ExtResource("1_vp76e")
-default_font_size = 24
+default_font_size = 36
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 20
+Button/styles/hover = SubResource("StyleBoxFlat_udmfb")
+Button/styles/normal = SubResource("StyleBoxFlat_ud7hl")
+Button/styles/pressed = SubResource("StyleBoxFlat_8hduk")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpxbn2o7n2gcu"]
+[gd_scene load_steps=6 format=3 uid="uid://s48xv3xqnvfi"]
 
 [ext_resource type="Script" path="res://Scripts/one_shot_particle.gd" id="1_xoswa"]
 [ext_resource type="QuadMesh" uid="uid://c4esl8pb1mm3k" path="res://Materials/sparkle_particle_draw_pass.tres" id="2_1kv6u"]

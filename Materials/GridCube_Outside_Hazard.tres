@@ -11,6 +11,6 @@ shader_parameter/gridThickness = 0.025
 shader_parameter/gridFuzz = 0.01
 shader_parameter/hazard = 1.0
 shader_parameter/gridColor = Color(0.0198, 0.0466, 0.06, 1)
-shader_parameter/faceColor = Color(0.0509804, 0.117647, 0.14902, 0)
+shader_parameter/faceColor = Color(0.0509804, 0.117647, 0.14902, 0.12549)
 shader_parameter/origin = Vector3(0, 0, 0)
 shader_parameter/scratches = ExtResource("2_bjjjj")

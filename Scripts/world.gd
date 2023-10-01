@@ -119,42 +119,42 @@ func in_range(tilePos : Vector3, face : DEFS.CubeFace = DEFS.CubeFace.NONE, marg
 	
 	var xExtent = Extent - margin
 	if face == DEFS.CubeFace.LEFT || face == DEFS.CubeFace.RIGHT:
-		print("Cubeface ", face, " extends x extents by 1")
+		#print("Cubeface ", face, " extends x extents by 1")
 		xExtent = Extent + 1  # unapply margin and also expand by one for blocks ON this face
 	if tilePos.x < -xExtent:
-		print("Out of range X ", tilePos.x, " < ", -xExtent)
+		#print("Out of range X ", tilePos.x, " < ", -xExtent)
 		return false
 	if tilePos.x > xExtent:
-		print("Out of range X ", tilePos.x, " > ", xExtent)
+		#print("Out of range X ", tilePos.x, " > ", xExtent)
 		return false
 			
 	var yExtent = Extent - margin
 	if face == DEFS.CubeFace.TOP || face == DEFS.CubeFace.BOTTOM:
-		print("Cubeface ", face, " extends y extents by 1")
+		#print("Cubeface ", face, " extends y extents by 1")
 		yExtent = Extent + 1  # unapply margin and also expand by one for blocks ON this face
 	if tilePos.y < -yExtent:
-		print("Out of range Y ", tilePos.y, " < ", -yExtent)
+		#print("Out of range Y ", tilePos.y, " < ", -yExtent)
 		return false
 	if tilePos.y > yExtent:
-		print("Out of range Y ", tilePos.y, " > ", yExtent)
+		#print("Out of range Y ", tilePos.y, " > ", yExtent)
 		return false
 			
 	var zExtent = Extent - margin
 	if face == DEFS.CubeFace.FRONT || face == DEFS.CubeFace.BACK:
-		print("Cubeface ", face, " extends z extents by 1")
+		#print("Cubeface ", face, " extends z extents by 1")
 		zExtent = Extent + 1  # unapply margin and also expand by one for blocks ON this face
 	if tilePos.z < -zExtent:
-		print("Out of range Z ", tilePos.z, " < ", -zExtent)
+		#print("Out of range Z ", tilePos.z, " < ", -zExtent)
 		return false
 	if tilePos.z > zExtent:
-		print("Out of range Z ", tilePos.z, " > ", zExtent)
+		#print("Out of range Z ", tilePos.z, " > ", zExtent)
 		return false
 	
-	print("Range check on ", tilePos, ": passed")
+	#print("Range check on ", tilePos, ": passed")
 	return true
 	
 func coord_in_range(tileCoord : Vector3i) -> bool:
-	print("Checking coord range for ", tileCoord)
+	#print("Checking coord range for ", tileCoord)
 	return in_range(to_pos(tileCoord), DEFS.CubeFace.NONE, -2)
 	
 func to_pos(coord : Vector3i) -> Vector3:
@@ -199,7 +199,7 @@ func commit():
 		
 		var destStatus = nextBlockLookup[dest.x][dest.y][dest.z]
 		var currBlock = blockLookup[org.x][org.y][org.z]
-		print("Overwriting block ", destStatus, " at ", dest, " with ", currBlock, " at ", org, " which will become null")
+		#print("Overwriting block ", destStatus, " at ", dest, " with ", currBlock, " at ", org, " which will become null")
 		
 		nextBlockLookup[dest.x][dest.y][dest.z] = currBlock
 		blockWasUpdated[dest.x][dest.y][dest.z] = true

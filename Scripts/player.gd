@@ -11,10 +11,18 @@ var game_facing : float
 
 var time
 var spawn_anim_start_time = 0.0
-var spawn_anim_duration = 1.0
+var spawn_anim_duration = 2.0
 var spawn_anim_height = 3.0
 var spawn_position : Vector3
 var spawn_anim_disable_controls
+
+var move_duration = 0.20
+var move_time = 0
+var move_from : Transform3D
+var move_to : Transform3D
+var move_hop_height = 0.2
+var move_tilt_dir = false
+var move_tilt_angle = 5
 
 @onready var body : Node3D = get_node("Body")
 @export var camera_arm : CameraArm
@@ -35,7 +43,7 @@ func reset():
 		game_face = DEFS.CubeFace.TOP
 		game_pos = world.to_pos(world.to_coord(position))
 		game_basis = Basis.IDENTITY
-		game_facing = 0
+		game_facing = 180
 		
 		# Now set rotations
 		basis = game_basis
@@ -49,19 +57,32 @@ func reset():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta : float):
+	# Movement animation
+	if move_time > 0:
+		move_time -= delta
+		var moveT = 1.0 - clampf(move_time / move_duration, 0, 1)
+		
+		var moveBasis = move_from.basis.slerp(move_to.basis, moveT);
+		var movePos = move_from.origin.lerp(move_to.origin, moveT);
+		transform = Transform3D(moveBasis, movePos)
+		
+		var tilt = (1.0 if move_tilt_dir else -1.0) * sin(moveT * PI) * deg_to_rad(move_tilt_angle)
+		body.basis = Basis(Vector3.UP, deg_to_rad(game_facing)).rotated(body.basis.z, tilt)
+		body.position = body.basis.y * sin(moveT * PI) * move_hop_height
+		
+		
 	if time > spawn_anim_start_time + spawn_anim_duration:
 		spawn_anim_disable_controls = false
-		return
-
-	time += delta
-		
-	if time > spawn_anim_start_time:
-		var t = (time - spawn_anim_start_time) / spawn_anim_duration
-		t = ease_in_quad(t)
-		position = spawn_position + basis.y * spawn_anim_height * t
-		
-		var s = 1 - t
-		body.scale = Vector3(s, s, s)
+	else:
+		time += delta
+			
+		if time > spawn_anim_start_time:
+			var t = (time - spawn_anim_start_time) / spawn_anim_duration
+			t = ease_in_quad(t)
+			position = spawn_position + basis.y * spawn_anim_height * t
+			
+			var s = 1 - t
+			body.scale = Vector3(s, s, s)
 		
 func ease_in_quad(x : float) -> float:
 	return pow(1 - x, 2);
@@ -72,23 +93,27 @@ func _physics_process(_delta : float) -> void:
 		
 	if spawn_anim_disable_controls:
 		return
+	
+	# Can't move while still moving
+	if move_time > 0:
+		return
 		
 	var moveAxis : Vector3 = Vector3.ZERO;
 	var look_angle = camera_arm.get_nearest_cardinal_angle()
 	
-	if Input.is_action_just_pressed("move_up"):
+	if Input.is_action_pressed("move_up"):
 		moveAxis = -game_basis.z;
 		game_facing = look_angle + 0
 		
-	if Input.is_action_just_pressed("move_down"):
+	if Input.is_action_pressed("move_down"):
 		moveAxis = game_basis.z;
 		game_facing = look_angle + 180
 		
-	if Input.is_action_just_pressed("move_left"):
+	if Input.is_action_pressed("move_left"):
 		moveAxis = -game_basis.x;
 		game_facing = look_angle + 90
 		
-	if Input.is_action_just_pressed("move_right"):
+	if Input.is_action_pressed("move_right"):
 		moveAxis = game_basis.x;
 		game_facing = look_angle - 90
 		
@@ -100,6 +125,7 @@ func _physics_process(_delta : float) -> void:
 	var prev_face = game_face
 	var prev_game_pos = game_pos
 	var prev_basis = game_basis
+	var prev_xform = transform
 	
 	game_pos += moveAxis;
 	
@@ -230,6 +256,13 @@ func _physics_process(_delta : float) -> void:
 	# Update those indicators!
 	if didRotate:
 		world.update_indicator_beams(game_basis)
+	
+	# Begin movement animation	
+	move_time = move_duration
+	move_from = prev_xform
+	move_to = transform
+	move_tilt_dir = !move_tilt_dir
+	transform = move_from
 		
 func compute_origin(face : DEFS.CubeFace, pos : Vector3) -> Vector3:
 	var faceVec = get_face_vec(face)

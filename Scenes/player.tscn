@@ -1,14 +1,52 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwdfrmj5umm4v"]
+[gd_scene load_steps=16 format=3 uid="uid://cwdfrmj5umm4v"]
 
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_m70j5"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_np7qj"]
+[ext_resource type="Material" uid="uid://biro2y3u4uk8r" path="res://Materials/space_suit_white.tres" id="2_xsw2d"]
+[ext_resource type="Material" uid="uid://bynjws8an30lh" path="res://Materials/space_suit_grey.tres" id="3_50l0b"]
+[ext_resource type="Material" uid="uid://bf0kx7hig8bm3" path="res://Materials/space_suit_glass.tres" id="3_bma37"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_j1yrr"]
-radius = 0.25
-height = 1.0
+material = ExtResource("2_xsw2d")
+radius = 0.23
+height = 0.65
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i2sfm"]
+material = ExtResource("2_xsw2d")
+radius = 0.065
+height = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ewbbp"]
+albedo_color = Color(0.619608, 0.619608, 0.619608, 1)
+roughness = 0.55
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wh7qu"]
+material = SubResource("StandardMaterial3D_ewbbp")
+radius = 0.1
+height = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_rtyr8"]
-size = Vector3(0.1, 0.1, 0.2)
+material = ExtResource("3_50l0b")
+size = Vector3(0.2, 0.05, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s2y1h"]
+material = ExtResource("3_50l0b")
+size = Vector3(0.35, 0.15, 0.7)
+
+[sub_resource type="SphereMesh" id="SphereMesh_v2j54"]
+material = ExtResource("2_xsw2d")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_srxsp"]
+material = ExtResource("3_bma37")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="TorusMesh" id="TorusMesh_u3y56"]
+material = ExtResource("2_xsw2d")
+inner_radius = 0.15
+outer_radius = 0.26
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jo7ws"]
 radius = 0.25
@@ -22,15 +60,57 @@ metadata/_edit_group_ = true
 
 [node name="Body" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="Torso" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.521415, 0)
 mesh = SubResource("CapsuleMesh_j1yrr")
 skeleton = NodePath("")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.600145, -0.274296)
+[node name="Right Arm" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 0.173648, -0.984808, 0, 0.984808, 0.173648, 0.25, 0.572886, -0.120143)
+mesh = SubResource("CapsuleMesh_i2sfm")
+skeleton = NodePath("")
+
+[node name="Left Arm" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 0.173648, -0.984808, 0, 0.984808, 0.173648, -0.25, 0.572714, -0.119984)
+mesh = SubResource("CapsuleMesh_i2sfm")
+skeleton = NodePath("")
+
+[node name="Right Leg" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.997733, -0.067, 0.00636168, 0.0672451, 0.996298, -0.053551, -0.00275022, 0.0538574, 0.998545, 0.122116, 0.185461, -0.0219964)
+mesh = SubResource("CapsuleMesh_wh7qu")
+skeleton = NodePath("")
+
+[node name="Left Leg" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.995536, 0.0943567, -0.00223124, -0.094379, 0.994997, -0.0327528, -0.000870368, 0.0328172, 0.999461, -0.113333, 0.185, -0.022)
+mesh = SubResource("CapsuleMesh_wh7qu")
+skeleton = NodePath("")
+
+[node name="Front Panel" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.559291, -0.223121)
 mesh = SubResource("BoxMesh_rtyr8")
 skeleton = NodePath("")
+
+[node name="Backpack" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.63267, 0.270672)
+mesh = SubResource("BoxMesh_s2y1h")
+skeleton = NodePath("")
+
+[node name="Helmet Back" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.817594, 0)
+mesh = SubResource("SphereMesh_v2j54")
+
+[node name="Shiny Glassy Stuff" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.81438, -0.00899631)
+mesh = SubResource("SphereMesh_srxsp")
+skeleton = NodePath("../Helmet Back")
+
+[node name="Helmet Ring" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965926, 0, -0.965926, -0.258819, 0, 0.81818, 0)
+mesh = SubResource("TorusMesh_u3y56")
+
+[node name="Neck Ring2" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -1, 2.98023e-08, 0, -2.98023e-08, -1, 0, 0.712097, 0)
+mesh = SubResource("TorusMesh_u3y56")
 
 [node name="Camera Orbit Arm" type="SpringArm3D" parent="."]
 collision_mask = 0

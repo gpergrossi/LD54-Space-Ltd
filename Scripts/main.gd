@@ -6,7 +6,6 @@ var currentLevel = 0;
 var currentLevelInstance = null;
 
 var levels = Array([
-		"res://Scenes/Levels/Level5.tscn",
 		"res://Scenes/Levels/Level0.tscn",
 		"res://Scenes/Levels/Level1.tscn",
 		"res://Scenes/Levels/Level2.tscn",

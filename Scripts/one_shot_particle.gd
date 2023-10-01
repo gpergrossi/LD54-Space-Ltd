@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var particles : GPUParticles3D = get_node("GPUParticles3D")
+@export var particles : GPUParticles3D
 
 func _ready():
 	particles.emitting = true
@@ -8,4 +8,4 @@ func _ready():
 	timer.connect("timeout", on_finished)
 
 func on_finished():
-	queue_free()
+	call_deferred("queue_free")

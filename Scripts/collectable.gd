@@ -38,8 +38,7 @@ func _on_area_3d_body_entered(body):
 
 func collect():
 	print("Collectible get!")
-	var particlesScene = load("res://Scenes/Effects/" + fireworksEffectScene)
-	var inst = particlesScene.instantiate()
+	var inst = GlobalDefinitions.FireworkScene.instantiate()
 	inst.position = self.position
 	get_parent().call_deferred("add_child", inst)
 	on_collected.emit()
@@ -78,19 +77,19 @@ func update_color():
 		omat.albedo_color = Color(color.r, color.g, color.b, 1.0)
 	
 	
-func get_hue(color : Color) -> float:
-	var max = max(color.r, color.g, color.b)
-	var min = min(color.r, color.g, color.b)
+func get_hue(a_color : Color) -> float:
+	var _max = max(a_color.r, a_color.g, a_color.b)
+	var _min = min(a_color.r, a_color.g, a_color.b)
 	
-	if (min == max):
+	if (_min == _max):
 		return 0;
 	
 	var hue : float
-	if (color.r == max):
-		hue = (color.g - color.b) / (max - min)
-	elif (color.g == max):
-		hue = 2.0 + (color.b - color.r) / (max - min)
+	if (a_color.r == _max):
+		hue = (a_color.g - a_color.b) / (_max - _min)
+	elif (a_color.g == _max):
+		hue = 2.0 + (a_color.b - a_color.r) / (_max - _min)
 	else:
-		hue = 4.0 + (color.r - color.g) / (max - min)
+		hue = 4.0 + (a_color.r - a_color.g) / (_max - _min)
 	
 	return fmod(hue * 60.0, 360.0) / 360.0

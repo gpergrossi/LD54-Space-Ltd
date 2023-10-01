@@ -38,8 +38,12 @@ bbcode_enabled = true
 text = "[wave amp=100 freq=3][center]Victory![/center][/wave]"
 fit_content = true
 
-[node name="Button" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 80)
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Button" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -47,4 +51,12 @@ theme = ExtResource("2_4rwmp")
 text = "Continue
 "
 
-[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+bbcode_enabled = true
+text = "[center][i](or press space)"
+
+[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

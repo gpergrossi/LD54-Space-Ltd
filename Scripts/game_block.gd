@@ -10,8 +10,27 @@ var world : World
 var game_pos : Vector3i
 var game_face : DEFS.CubeFace
 
+var move_duration = 0.2
+var move_time = 0
+var move_delta : Vector3
+var move_dest : Vector3
+
 func _ready():
 	update_color()
+
+func _process(delta):
+	if move_time > 0:
+		move_time -= delta
+		
+		delta = min(delta, move_time)
+		var deltaT = delta / move_duration
+		move_and_collide(deltaT * move_delta)
+		
+		# Finish up exactly where we intended to without any rounding errors
+		if move_time <= 0:
+			position = move_dest
+		
+		
 
 func _set_color(value):
 	color = value
@@ -133,6 +152,10 @@ func find_contiguous_blocks(blockCoord):
 	return contiguous
 	
 func can_move(coord, push_vec):
+	# Can't move while animating previous move
+	if move_time > 0:
+		return false
+	
 	var nextCoord = coord + push_vec
 	if world.coord_in_range(nextCoord):
 		# Look up again but with correct game_face and margin
@@ -174,4 +197,6 @@ func move(coord, push_vec):
 func apply_move(dest : Vector3):
 	#print("Applying move from ", game_pos, " to ", dest)
 	game_pos = dest
-	move_and_collide(dest - position)
+	move_delta = dest - position
+	move_dest = dest;
+	move_time = move_duration

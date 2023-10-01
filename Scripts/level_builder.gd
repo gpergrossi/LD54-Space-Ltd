@@ -1,6 +1,4 @@
-extends Node
-
-class_name ClassLevelBuilder
+class_name ClassLevelBuilder extends Node
 
 var nodeXPos;
 var nodeXNeg;
@@ -9,6 +7,21 @@ var nodeYNeg;
 var nodeZPos;
 var nodeZNeg;
 
+var x_pos = preload("res://Scenes/Grid Parts/x_pos.tscn");
+var x_pos_hazard = preload("res://Scenes/Grid Parts/x_pos_hazard.tscn");
+var x_neg = preload("res://Scenes/Grid Parts/x_neg.tscn");
+var x_neg_hazard = preload("res://Scenes/Grid Parts/x_neg_hazard.tscn");
+
+var y_pos = preload("res://Scenes/Grid Parts/y_pos.tscn");
+var y_pos_hazard = preload("res://Scenes/Grid Parts/y_pos_hazard.tscn");
+var y_neg = preload("res://Scenes/Grid Parts/y_neg.tscn");
+var y_neg_hazard = preload("res://Scenes/Grid Parts/y_neg_hazard.tscn");
+
+var z_pos = preload("res://Scenes/Grid Parts/z_pos.tscn");
+var z_pos_hazard = preload("res://Scenes/Grid Parts/z_pos_hazard.tscn");
+var z_neg = preload("res://Scenes/Grid Parts/z_neg.tscn");
+var z_neg_hazard = preload("res://Scenes/Grid Parts/z_neg_hazard.tscn");
+	
 func build(spawnNode, mapSize):
 	var ext = int(mapSize/2);
 	
@@ -31,7 +44,7 @@ func build(spawnNode, mapSize):
 			for z in range(2 * ext + 1):
 				build_tile(ext, Vector3(x-ext, y-ext, z-ext))
 	
-	spawnNode.call_deferred("add_child", nodeXPos);
+	spawnNode.call_deferred("add_child", nodeXPos)
 	spawnNode.call_deferred("add_child", nodeXNeg)
 	spawnNode.call_deferred("add_child", nodeYPos)
 	spawnNode.call_deferred("add_child", nodeYNeg)
@@ -39,21 +52,6 @@ func build(spawnNode, mapSize):
 	spawnNode.call_deferred("add_child", nodeZNeg)
 
 func build_tile(ext, tilePos):
-	var x_pos = preload("res://Scenes/Grid Parts/x_pos.tscn");
-	var x_pos_hazard = preload("res://Scenes/Grid Parts/x_pos_hazard.tscn");
-	var x_neg = preload("res://Scenes/Grid Parts/x_neg.tscn");
-	var x_neg_hazard = preload("res://Scenes/Grid Parts/x_neg_hazard.tscn");
-
-	var y_pos = preload("res://Scenes/Grid Parts/y_pos.tscn");
-	var y_pos_hazard = preload("res://Scenes/Grid Parts/y_pos_hazard.tscn");
-	var y_neg = preload("res://Scenes/Grid Parts/y_neg.tscn");
-	var y_neg_hazard = preload("res://Scenes/Grid Parts/y_neg_hazard.tscn");
-
-	var z_pos = preload("res://Scenes/Grid Parts/z_pos.tscn");
-	var z_pos_hazard = preload("res://Scenes/Grid Parts/z_pos_hazard.tscn");
-	var z_neg = preload("res://Scenes/Grid Parts/z_neg.tscn");
-	var z_neg_hazard = preload("res://Scenes/Grid Parts/z_neg_hazard.tscn");
-
 	if is_equal_approx(tilePos.x, ext):
 		if is_equal_approx(abs(tilePos.y), ext) or is_equal_approx(abs(tilePos.z), ext):
 			instantiate_at(nodeXPos, x_pos_hazard, tilePos + Vector3(0.5, 0.0, 0.0), tilePos.y, tilePos.z)
