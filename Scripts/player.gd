@@ -3,29 +3,33 @@ extends CharacterBody3D
 class_name Player
 
 @export var world : World
+@export var main : MainScript
 
 var game_face : DEFS.CubeFace
 var game_pos : Vector3
 var game_basis : Basis
 var game_facing : float
 
-var time
-var spawn_anim_start_time = 0.0
-var spawn_anim_duration = 2.0
-var spawn_anim_height = 3.0
+var time : float = 0
+var spawn_anim_start_time : float = 0.0
+var spawn_anim_duration : float = 2.0
+var spawn_anim_height : float = 3.0
 var spawn_position : Vector3
-var spawn_anim_disable_controls
+var spawn_anim_disable_controls : bool
 
-var move_duration = 0.20
-var move_time = 0
+var move_duration : float = 0.20
+var move_time : float = 0
 var move_from : Transform3D
 var move_to : Transform3D
-var move_hop_height = 0.2
-var move_tilt_dir = false
-var move_tilt_angle = 5
+var move_hop_height : float = 0.2
+var move_tilt_dir : bool = false
+var move_tilt_angle : float = 5
 
 @onready var body : Node3D = get_node("Body")
 @export var camera_arm : CameraArm
+
+@export var push_sound : AudioStreamPlayer
+@export var blocked_sound : AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,6 +39,9 @@ func reset():
 	if is_instance_valid(world):
 		# Reset camera
 		camera_arm.reset()
+		
+		# Make sure we're visible
+		body.show()
 		
 		# Set position first
 		position = compute_origin(DEFS.CubeFace.TOP, Vector3(0,0,0))
@@ -67,9 +74,8 @@ func _process(delta : float):
 		transform = Transform3D(moveBasis, movePos)
 		
 		var tilt = (1.0 if move_tilt_dir else -1.0) * sin(moveT * PI) * deg_to_rad(move_tilt_angle)
-		body.basis = Basis(Vector3.UP, deg_to_rad(game_facing)).rotated(body.basis.z, tilt)
+		body.basis = Basis(Vector3.UP, deg_to_rad(game_facing)).rotated(body.basis.z.normalized(), tilt)
 		body.position = body.basis.y * sin(moveT * PI) * move_hop_height
-		
 		
 	if time > spawn_anim_start_time + spawn_anim_duration:
 		spawn_anim_disable_controls = false
@@ -88,15 +94,10 @@ func ease_in_quad(x : float) -> float:
 	return pow(1 - x, 2);
 	
 func _physics_process(_delta : float) -> void:
-	if !is_instance_valid(world):
-		return
-		
-	if spawn_anim_disable_controls:
-		return
-	
-	# Can't move while still moving
-	if move_time > 0:
-		return
+	if !is_instance_valid(world): return
+	if spawn_anim_disable_controls: return
+	if main.settings_pause_input: return
+	if move_time > 0: return  # Can't move while still moving
 		
 	var moveAxis : Vector3 = Vector3.ZERO;
 	var look_angle = camera_arm.get_nearest_cardinal_angle()
@@ -239,6 +240,8 @@ func _physics_process(_delta : float) -> void:
 		if success:
 			# Finish moving, since we got interrupted by the collision
 			position = nextPos
+			push_sound.play()
+			
 		else:
 			# Return to position before trying to move
 			# NOTE: Not resetting facing.
@@ -246,6 +249,7 @@ func _physics_process(_delta : float) -> void:
 			game_face = prev_face
 			game_pos = prev_game_pos
 			game_basis = prev_basis
+			blocked_sound.play()
 	
 	# Screen basis
 	basis = game_basis

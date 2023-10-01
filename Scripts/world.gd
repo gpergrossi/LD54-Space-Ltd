@@ -197,7 +197,7 @@ func commit():
 		var dest = move_.destination
 		var org = move_.origin
 		
-		var destStatus = nextBlockLookup[dest.x][dest.y][dest.z]
+		#var destStatus = nextBlockLookup[dest.x][dest.y][dest.z]
 		var currBlock = blockLookup[org.x][org.y][org.z]
 		#print("Overwriting block ", destStatus, " at ", dest, " with ", currBlock, " at ", org, " which will become null")
 		

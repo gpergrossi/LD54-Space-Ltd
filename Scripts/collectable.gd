@@ -11,6 +11,7 @@ signal on_collected()
 @export var opaque_sphere : MeshInstance3D
 @export var particles : GPUParticles3D
 @export var indicator : IndicatorBeam
+@export var sound : AudioStreamPlayer
 
 func _ready():
 	update_color()
@@ -42,7 +43,9 @@ func collect():
 	inst.position = self.position
 	get_parent().call_deferred("add_child", inst)
 	on_collected.emit()
-	queue_free()
+	sound.playing = true
+	sound.connect("finished", sound_effect_done)
+	visible = false
 
 func dim():
 	transparent_sphere.visible = false;
@@ -93,3 +96,6 @@ func get_hue(a_color : Color) -> float:
 		hue = 4.0 + (a_color.r - a_color.g) / (_max - _min)
 	
 	return fmod(hue * 60.0, 360.0) / 360.0
+
+func sound_effect_done():
+	queue_free()

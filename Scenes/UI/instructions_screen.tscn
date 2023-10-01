@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=3 uid="uid://0hpfl6wcdkmi"]
+
+[ext_resource type="Script" path="res://Scripts/instructions_screen.gd" id="1_bgw5j"]
+[ext_resource type="FontFile" uid="uid://dxfgiwlnimbpr" path="res://Scenes/UI/RubikMonoOne-Regular.ttf" id="2_bcmbv"]
+[ext_resource type="Theme" uid="uid://c3p6v6ekdbi8q" path="res://Scenes/UI/ui_theme.tres" id="3_wi6nb"]
+
+[node name="InstructionsScreen" type="Node3D" node_paths=PackedStringArray("canvas")]
+script = ExtResource("1_bgw5j")
+canvas = NodePath("CanvasLayer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -307.0
+offset_top = -211.5
+offset_right = 310.0
+offset_bottom = 221.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.231373, 0.231373, 0.231373, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(800, 100)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("2_bcmbv")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]Instructions"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(1.475, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]This is a puzzle game about moving interlocking pieces. Your goal is to collect each shiny collectable with the correct color block.
+
+Use WASD or Arrow Keys to move.
+Pause with Space to change audio settings in game.
+
+The first few levels are a tutorial.
+Thanks for playing!"
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Exit Button" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(200, 45)
+layout_mode = 2
+theme = ExtResource("3_wi6nb")
+theme_override_font_sizes/font_size = 24
+text = "DONE
+"
+
+[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer/CenterContainer/Exit Button" to="." method="_on_exit_button_pressed"]

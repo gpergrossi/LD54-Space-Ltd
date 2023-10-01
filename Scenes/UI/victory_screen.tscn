@@ -1,16 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://5r1xqufbd5q7"]
 
-[ext_resource type="Script" path="res://Scenes/UI/victory_screen.gd" id="1_ii8bm"]
+[ext_resource type="Script" path="res://Scripts/victory_screen.gd" id="1_r0rmr"]
 [ext_resource type="Theme" uid="uid://c3p6v6ekdbi8q" path="res://Scenes/UI/ui_theme.tres" id="2_4rwmp"]
 
-[node name="VictoryScreen" type="Control"]
+[node name="VictoryScreen" type="Control" node_paths=PackedStringArray("canvas")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ii8bm")
+script = ExtResource("1_r0rmr")
+canvas = NodePath("CanvasLayer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -43,7 +44,7 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="Button" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://b521uvvcqyndx"]
+[gd_scene load_steps=13 format=3 uid="uid://b521uvvcqyndx"]
 
 [ext_resource type="Script" path="res://Scripts/collectable.gd" id="1_upfje"]
 [ext_resource type="QuadMesh" uid="uid://c4esl8pb1mm3k" path="res://Materials/sparkle_particle_draw_pass.tres" id="2_oj41f"]
 [ext_resource type="PackedScene" uid="uid://d15lh33r4tb6j" path="res://Scenes/Effects/indicatorizer.tscn" id="3_apr1t"]
+[ext_resource type="AudioStream" uid="uid://boufdn08bnhyu" path="res://Sounds/Pickup Coin.ogg" id="4_sop10"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wum12"]
 radius = 0.35
@@ -52,7 +53,7 @@ damping_max = 0.9
 color = Color(1, 0.5, 0.5, 1)
 color_ramp = SubResource("GradientTexture1D_j4d77")
 
-[node name="Collectable 1" type="Node3D" node_paths=PackedStringArray("transparent_sphere", "opaque_sphere", "particles", "indicator")]
+[node name="Collectable 1" type="Node3D" node_paths=PackedStringArray("transparent_sphere", "opaque_sphere", "particles", "indicator", "sound")]
 script = ExtResource("1_upfje")
 color = Color(0.976471, 0, 0, 1)
 fireworksEffectScene = "blue_fireworks.tscn"
@@ -60,6 +61,7 @@ transparent_sphere = NodePath("Transparent")
 opaque_sphere = NodePath("Opaque")
 particles = NodePath("Particles")
 indicator = NodePath("Indicatorizer")
+sound = NodePath("Sound")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 4
@@ -86,6 +88,10 @@ process_material = SubResource("ParticleProcessMaterial_wckdn")
 draw_pass_1 = ExtResource("2_oj41f")
 
 [node name="Indicatorizer" parent="." instance=ExtResource("3_apr1t")]
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_sop10")
+bus = &"Sound"
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

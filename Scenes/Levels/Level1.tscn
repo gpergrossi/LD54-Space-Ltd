@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce7g5inrvyodd"]
+[gd_scene load_steps=7 format=3 uid="uid://ce7g5inrvyodd"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_4y4ct"]
 [ext_resource type="PackedScene" uid="uid://dkyic0wndltke" path="res://Scenes/Tools/MockGrid7x7.tscn" id="2_m467j"]
 [ext_resource type="PackedScene" uid="uid://b521uvvcqyndx" path="res://Scenes/Collectables/collectable.tscn" id="5_2mesj"]
 [ext_resource type="PackedScene" uid="uid://c48jwgb4os5pd" path="res://Scenes/Blocks/game_block.tscn" id="7_f4je0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mooan"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_1mmty"]
+material = SubResource("StandardMaterial3D_mooan")
+text = "Push me"
+depth = 0.01
 
 [node name="Level1" type="Node3D"]
 script = ExtResource("1_4y4ct")
@@ -21,6 +30,10 @@ color = Color(0, 1, 0, 1)
 [node name="Green Block 3" parent="." instance=ExtResource("7_f4je0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 4, 0)
 color = Color(0, 1, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Green Block 3"]
+transform = Transform3D(1, 0, 0, 0, 0.521054, 0.853524, 0, -0.853524, 0.521054, 0, 0.698328, 0.628682)
+mesh = SubResource("TextMesh_1mmty")
 
 [node name="Green Collectable 1" parent="." instance=ExtResource("5_2mesj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)

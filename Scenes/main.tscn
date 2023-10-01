@@ -1,11 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bl27qf60r1tbl"]
+[gd_scene load_steps=9 format=3 uid="uid://bl27qf60r1tbl"]
 
 [ext_resource type="PackedScene" uid="uid://xso1xx55wcpr" path="res://Scenes/Environment/space_scene.tscn" id="1_12kei"]
 [ext_resource type="PackedScene" uid="uid://cwdfrmj5umm4v" path="res://Scenes/player.tscn" id="1_nxy2d"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_rvkor"]
+[ext_resource type="AudioStream" uid="uid://dop0ocl5mu56p" path="res://Music/Ambient Space Music.ogg" id="4_4nksb"]
+[ext_resource type="PackedScene" uid="uid://cr0slphf6tvjs" path="res://Scenes/UI/settings_scene.tscn" id="5_ngq6n"]
+[ext_resource type="PackedScene" uid="uid://5r1xqufbd5q7" path="res://Scenes/UI/victory_screen.tscn" id="6_ljhi6"]
+[ext_resource type="PackedScene" uid="uid://bn0apheil0h7c" path="res://Scenes/UI/title_scene.tscn" id="7_wni0b"]
+[ext_resource type="PackedScene" uid="uid://0hpfl6wcdkmi" path="res://Scenes/UI/instructions_screen.tscn" id="8_gw6to"]
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("player", "settings_ui", "victory_ui", "title_ui", "instructions_ui")]
 script = ExtResource("1_rvkor")
+player = NodePath("Player")
+settings_ui = NodePath("Settings Scene")
+victory_ui = NodePath("VictoryScreen")
+title_ui = NodePath("Title Scene")
+instructions_ui = NodePath("InstructionsScreen")
 
 [node name="Space Scene" parent="." instance=ExtResource("1_12kei")]
 transform = Transform3D(0.085417, 0, -0.996345, 0, 1, 0, 0.996345, 0, 0.085417, 0, 0, 0)
@@ -19,4 +29,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Player" parent="." instance=ExtResource("1_nxy2d")]
+[node name="Player" parent="." node_paths=PackedStringArray("main") instance=ExtResource("1_nxy2d")]
+main = NodePath("..")
+
+[node name="Background Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_4nksb")
+autoplay = true
+bus = &"Music"
+
+[node name="Settings Scene" parent="." instance=ExtResource("5_ngq6n")]
+
+[node name="VictoryScreen" parent="." node_paths=PackedStringArray("main") instance=ExtResource("6_ljhi6")]
+main = NodePath("..")
+
+[node name="Title Scene" parent="." node_paths=PackedStringArray("main") instance=ExtResource("7_wni0b")]
+main = NodePath("..")
+
+[node name="InstructionsScreen" parent="." instance=ExtResource("8_gw6to")]

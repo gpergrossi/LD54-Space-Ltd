@@ -169,10 +169,10 @@ func can_move(coord, push_vec):
 		if world.in_range(pos, block.game_face, margin):
 			var other = world.blockLookup[nextCoord.x][nextCoord.y][nextCoord.z]
 			if not is_instance_valid(other):
-				print("Can move ", coord, " in direction ", push_vec, " because ", nextCoord, " is null")
+				#print("Can move ", coord, " in direction ", push_vec, " because ", nextCoord, " is null")
 				return true
 			elif is_same_color(block, other):
-				print("Can move ", coord, " in direction ", push_vec, " because ", nextCoord, " is the same color. ", block.color, " == ", other.color)
+				#print("Can move ", coord, " in direction ", push_vec, " because ", nextCoord, " is the same color. ", block.color, " == ", other.color)
 				return true
 			else:
 				pass

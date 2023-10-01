@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dop0ocl5mu56p"
+path="res://.godot/imported/Ambient Space Music.ogg-0e43cb2f13845002674cd47d9241e564.oggvorbisstr"
+
+[deps]
+
+source_file="res://Music/Ambient Space Music.ogg"
+dest_files=["res://.godot/imported/Ambient Space Music.ogg-0e43cb2f13845002674cd47d9241e564.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=30.0
+beat_count=30
+bar_beats=4
