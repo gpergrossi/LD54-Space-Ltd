@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b58tl765nmfhg"]
+
+[sub_resource type="Gradient" id="Gradient_t2g6v"]
+offsets = PackedFloat32Array(0.0220588, 0.400735, 0.632353, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aux77"]
+gradient = SubResource("Gradient_t2g6v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vhe7i"]
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_aux77")
+
+[sub_resource type="QuadMesh" id="QuadMesh_bpll0"]
+material = SubResource("StandardMaterial3D_vhe7i")
+size = Vector2(0.05, 0.5)
+
+[node name="IndicatorRayDepthSortSegment" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.25, 0)
+mesh = SubResource("QuadMesh_bpll0")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("QuadMesh_bpll0")
+skeleton = NodePath("../..")

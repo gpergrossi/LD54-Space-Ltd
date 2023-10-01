@@ -1,103 +1,63 @@
-[gd_scene load_steps=17 format=3 uid="uid://uhcrv582h5wj"]
+[gd_scene load_steps=5 format=3 uid="uid://c6bo1k8u1x06p"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_p771e"]
-[ext_resource type="Script" path="res://Scripts/delete_on_play.gd" id="2_s1brh"]
-[ext_resource type="Material" uid="uid://b2sfsrg63hppm" path="res://Materials/GridCube_Outside.tres" id="3_wnco3"]
-[ext_resource type="Material" uid="uid://btcgi3t1radnv" path="res://Materials/GridCube_Inside.tres" id="4_tryia"]
-[ext_resource type="PackedScene" uid="uid://y34dx1g4m7c2" path="res://Scenes/Blocks/game_block_green.tscn" id="5_6uucn"]
-[ext_resource type="PackedScene" uid="uid://c18vbl8clmii7" path="res://Scenes/Blocks/game_block_red.tscn" id="5_jbuas"]
-[ext_resource type="PackedScene" uid="uid://desc6xcium7xp" path="res://Scenes/Collectables/green_collectable.tscn" id="6_qdt6p"]
-[ext_resource type="PackedScene" uid="uid://pcugss17uk6j" path="res://Scenes/Collectables/red_collectable.tscn" id="8_q7o32"]
+[ext_resource type="PackedScene" uid="uid://dkyic0wndltke" path="res://Scenes/Tools/MockGrid7x7.tscn" id="2_s7ulm"]
+[ext_resource type="PackedScene" uid="uid://c48jwgb4os5pd" path="res://Scenes/Blocks/game_block.tscn" id="7_33br6"]
+[ext_resource type="PackedScene" uid="uid://b521uvvcqyndx" path="res://Scenes/Collectables/collectable.tscn" id="7_x267i"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yowko"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_30y8p"]
-material = SubResource("StandardMaterial3D_yowko")
-top_radius = 0.0
-bottom_radius = 0.25
-height = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgcgd"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_yfb82"]
-material = SubResource("StandardMaterial3D_hgcgd")
-top_radius = 0.0
-bottom_radius = 0.25
-height = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wpjnr"]
-albedo_color = Color(0, 0, 1, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_deykk"]
-material = SubResource("StandardMaterial3D_wpjnr")
-top_radius = 0.0
-bottom_radius = 0.25
-height = 1.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_rwvfy"]
-material = ExtResource("3_wnco3")
-size = Vector3(7, 7, 7)
-
-[sub_resource type="BoxMesh" id="BoxMesh_a1bof"]
-material = ExtResource("4_tryia")
-flip_faces = true
-size = Vector3(7, 7, 7)
-
-[node name="Level3" type="Node3D"]
+[node name="Level2" type="Node3D"]
 script = ExtResource("1_p771e")
 
-[node name="DeleteOnPlay" type="Node3D" parent="."]
-script = ExtResource("2_s1brh")
-metadata/_edit_group_ = true
+[node name="MockGrid7x7" parent="." instance=ExtResource("2_s7ulm")]
 
-[node name="Arrow Red" type="MeshInstance3D" parent="DeleteOnPlay"]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.5, 0, 0)
-visible = false
-mesh = SubResource("CylinderMesh_30y8p")
-skeleton = NodePath("../../..")
+[node name="Green Collectable 1" parent="." instance=ExtResource("7_x267i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2)
+color = Color(0, 1, 0, 1)
 
-[node name="Arrow Green" type="MeshInstance3D" parent="DeleteOnPlay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-visible = false
-mesh = SubResource("CylinderMesh_yfb82")
-skeleton = NodePath("../../..")
+[node name="Red Block 1" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -1)
+color = Color(1, 0, 0, 1)
 
-[node name="Arrow Blue" type="MeshInstance3D" parent="DeleteOnPlay"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.5)
-visible = false
-mesh = SubResource("CylinderMesh_deykk")
-skeleton = NodePath("../../..")
+[node name="Red Block 2" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -1)
+color = Color(1, 0, 0, 1)
 
-[node name="MockMapCube" type="Node3D" parent="DeleteOnPlay"]
+[node name="Red Block 3" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -1)
+color = Color(1, 0, 0, 1)
 
-[node name="Outside" type="MeshInstance3D" parent="DeleteOnPlay/MockMapCube"]
-mesh = SubResource("BoxMesh_rwvfy")
+[node name="Red Block 4" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1)
+color = Color(1, 0, 0, 1)
 
-[node name="Inside" type="MeshInstance3D" parent="DeleteOnPlay/MockMapCube"]
-mesh = SubResource("BoxMesh_a1bof")
+[node name="Red Block 5" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -1)
+color = Color(1, 0, 0, 1)
 
-[node name="Green Block" parent="." instance=ExtResource("5_6uucn")]
+[node name="Red Block 6" parent="." instance=ExtResource("7_33br6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 0)
+color = Color(1, 0, 0, 1)
 
-[node name="Green Block2" parent="." instance=ExtResource("5_6uucn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2, 0)
-
-[node name="Green Surface Block" parent="." instance=ExtResource("5_6uucn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0)
-
-[node name="Red Block" parent="." instance=ExtResource("5_jbuas")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0)
-
-[node name="Red Block2" parent="." instance=ExtResource("5_jbuas")]
+[node name="Red Block 7" parent="." instance=ExtResource("7_33br6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
+color = Color(1, 0, 0, 1)
 
-[node name="Red Block3" parent="." instance=ExtResource("5_jbuas")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 0)
+[node name="Red Block 8" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, -1)
+color = Color(1, 0, 0, 1)
 
-[node name="Green Collectable" parent="." instance=ExtResource("6_qdt6p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 1)
+[node name="Red Block 9" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
+color = Color(1, 0, 0, 1)
 
-[node name="Red Collectable" parent="." instance=ExtResource("8_q7o32")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 1)
+[node name="Green Block 1" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -2)
+color = Color(0, 1, 0, 1)
+
+[node name="Green Block 2" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 4, -2)
+color = Color(0, 1, 0, 1)
+
+[node name="Green Block 3" parent="." instance=ExtResource("7_33br6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -2)
+color = Color(0, 1, 0, 1)

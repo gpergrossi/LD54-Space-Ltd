@@ -1,14 +1,16 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://6fn7eji80cw3"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://6fn7eji80cw3"]
 
 [ext_resource type="Shader" path="res://Materials/MapGrid.gdshader" id="1_nx3mm"]
+[ext_resource type="Texture2D" uid="uid://dxfsotop0b60n" path="res://Materials/scratches_noise_texture_2d.tres" id="2_bjjjj"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_nx3mm")
 shader_parameter/gridSize = 1.0
-shader_parameter/gridThickness = 0.05
+shader_parameter/gridThickness = 0.025
 shader_parameter/gridFuzz = 0.01
 shader_parameter/hazard = 1.0
-shader_parameter/gridColor = Color(0.0941176, 0.188235, 0.235294, 1)
-shader_parameter/faceColor = Color(0.0941176, 0.188235, 0.235294, 0.501961)
+shader_parameter/gridColor = Color(0.0198, 0.0466, 0.06, 1)
+shader_parameter/faceColor = Color(0.0509804, 0.117647, 0.14902, 0)
 shader_parameter/origin = Vector3(0, 0, 0)
+shader_parameter/scratches = ExtResource("2_bjjjj")

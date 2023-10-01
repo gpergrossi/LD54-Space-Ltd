@@ -14,9 +14,10 @@ size = Vector3(0.1, 0.1, 0.2)
 radius = 0.25
 height = 1.0
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera_arm")]
 collision_mask = 6
 script = ExtResource("1_np7qj")
+camera_arm = NodePath("Camera Orbit Arm")
 metadata/_edit_group_ = true
 
 [node name="Body" type="Node3D" parent="."]

@@ -10,6 +10,7 @@ class_name World
 
 var allBlocks : Array
 var blockLookup : Array
+var allCollectables : Array
 
 var pendingMoves : Array
 
@@ -22,6 +23,11 @@ func get_extent():
 	
 func get_max_tile():
 	return int(Size / 2.0)
+
+var time
+var spawn_anim_start_time = 0.0
+var spawn_anim_duration = 2.0
+var spawn_anim_disable_interacts
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,6 +47,7 @@ func _ready():
 
 	var count = 0
 	allBlocks = Array()
+	allCollectables = Array()
 	for child in get_children():
 		if child is GameBlock:
 			var block = child as GameBlock
@@ -59,11 +66,50 @@ func _ready():
 			var collectable = child as Collectable
 			collectable.connect("on_collected", on_collectable_collected)
 			remainingCollectables += 1
-			
+			allCollectables.append(collectable)
+			collectable.update_indicator(Extent, Basis.IDENTITY)
+				
 	pendingMoves = Array()
 	
 	print("Built level with ", count, " blocks and ", remainingCollectables, " collectables")
+	
+	# begin spawn animation
+	time = 0
+	spawn_anim_disable_interacts = true
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta : float):
+	if time > spawn_anim_start_time + spawn_anim_duration:
+		spawn_anim_disable_interacts = false
+		return
+
+	time += delta
+		
+	if time > spawn_anim_start_time:
+		var t = (time - spawn_anim_start_time) / spawn_anim_duration
+		t = ease_out_back(t)
+		
+		var s = t
+		for block in allBlocks:
+			block.scale = Vector3(s, s, s)
 			
+		for coll in allCollectables:
+			# These might get collected before they're done looking cool
+			if is_instance_valid(coll):
+				coll.scale = Vector3(s, s, s)
+
+func update_indicator_beams(player_basis : Basis):
+	for coll in allCollectables:
+		# These might get collected
+		if is_instance_valid(coll):
+			var c = coll as Collectable
+			c.update_indicator(Extent, player_basis)
+
+func ease_out_back(x: float) -> float:
+	var c1 = 1.70158
+	var c3 = c1 + 1
+	return 1 + c3 * pow(x - 1, 3) + c1 * pow(x - 1, 2);
+
 func on_collectable_collected():
 	remainingCollectables -= 1
 	if (remainingCollectables <= 0):
@@ -147,9 +193,9 @@ func commit():
 		blockWasUpdated.append(irray2)
 	
 	# Move objects
-	for move in pendingMoves:
-		var dest = move.destination
-		var org = move.origin
+	for move_ in pendingMoves:
+		var dest = move_.destination
+		var org = move_.origin
 		
 		var destStatus = nextBlockLookup[dest.x][dest.y][dest.z]
 		var currBlock = blockLookup[org.x][org.y][org.z]

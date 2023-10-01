@@ -21,5 +21,6 @@ particles_anim_loop = false
 point_size = 54.0
 
 [resource]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_rc1wy")
 size = Vector2(0.1, 0.1)

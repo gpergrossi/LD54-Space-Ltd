@@ -1,4 +1,11 @@
-shader_type spatial;
+[gd_scene load_steps=8 format=3 uid="uid://c48jwgb4os5pd"]
+
+[ext_resource type="Script" path="res://Scripts/game_block.gd" id="1_lexwb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wbkv7"]
+
+[sub_resource type="Shader" id="Shader_hd4pd"]
+code = "shader_type spatial;
 render_mode blend_mix;
 
 uniform float gridSize = 1.0;
@@ -58,3 +65,51 @@ void fragment() {
 	METALLIC = 0.5;
 	ROUGHNESS = 0.8;
 }
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gcmch"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_hd4pd")
+shader_parameter/gridSize = 1.0
+shader_parameter/gridThickness = 0.075
+shader_parameter/gridFuzz = 0.005
+shader_parameter/hazard = 0.0
+shader_parameter/gridColor = Color(0.231373, 0.6, 0.596078, 1)
+shader_parameter/faceColor = Color(0.231373, 0.6, 0.596078, 0.5)
+shader_parameter/origin = Vector3(0, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jq8xb"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_gcmch")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2amwy"]
+resource_local_to_scene = true
+albedo_color = Color(0.231373, 0.6, 0.596078, 1)
+metallic = 0.45
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_6sgof"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_2amwy")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Block 1" type="CharacterBody3D" node_paths=PackedStringArray("transparent_block", "opaque_block")]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_lexwb")
+color = Color(0.231373, 0.6, 0.596078, 1)
+transparent_block = NodePath("TransparentBlock")
+opaque_block = NodePath("OpaqueBlock")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_wbkv7")
+
+[node name="TransparentBlock" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 0, 0, 0)
+mesh = SubResource("BoxMesh_jq8xb")
+skeleton = NodePath("")
+
+[node name="OpaqueBlock" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_6sgof")

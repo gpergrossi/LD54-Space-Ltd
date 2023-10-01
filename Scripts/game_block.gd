@@ -1,17 +1,39 @@
-extends CharacterBody3D
-
-class_name GameBlock
+@tool
+class_name GameBlock extends CharacterBody3D
 
 var world : World
-@export var color : Color
+@export var color : Color : set = _set_color
+
+@export var transparent_block : MeshInstance3D
+@export var opaque_block : MeshInstance3D
 
 var game_pos : Vector3i
 var game_face : DEFS.CubeFace
 
-# Called when the node enters the scene tree for the first time.
+func _ready():
+	update_color()
+
+func _set_color(value):
+	color = value
+	update_color()
+
+func update_color():
+	# Set out scene-local copy of the transparent block's material colors
+	if is_instance_valid(transparent_block):
+		var tmat = transparent_block.mesh.surface_get_material(0) as ShaderMaterial
+		if not tmat.resource_local_to_scene: tmat.setup_local_to_scene()
+		tmat.set_shader_parameter("gridColor", Color(color.r, color.g, color.b, 1.0))
+		tmat.set_shader_parameter("faceColor", Color(color.r, color.g, color.b, 0.5))
+	
+	# Set out scene-local copy of the opaque block's material color
+	if is_instance_valid(opaque_block):
+		var omat = opaque_block.mesh.surface_get_material(0) as StandardMaterial3D
+		if not omat.resource_local_to_scene: omat.setup_local_to_scene()
+		omat.albedo_color = color
+
+# Called from the world script after it has assigned the world object to this block
 func init_block():
 	game_pos = round(position / world.TileSize);
-	
 	game_face = DEFS.CubeFace.NONE
 	if game_pos.x > world.MaxTile:
 		game_face = DEFS.CubeFace.RIGHT
@@ -26,19 +48,15 @@ func init_block():
 	if game_pos.z < -world.MaxTile:
 		game_face = DEFS.CubeFace.BACK
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
 func check_push(player_pos : Vector3i, push_vec : Vector3i) -> bool:
-	print()
-	print("Check push from ", player_pos, " in direction ", push_vec, " on target ", game_pos)
+	#print()
+	#print("Check push from ", player_pos, " in direction ", push_vec, " on target ", game_pos)
 	
 	var blockPos = player_pos + push_vec
 	var blockCoord = world.to_coord(blockPos)
 	
 	var contiguous = find_contiguous_blocks(blockCoord)
-	print ("Found ", len(contiguous), " contiguous blocks")
+	#print ("Found ", len(contiguous), " contiguous blocks")
 	if len(contiguous) == 0:
 		return true  # this allows the player to escape if inside a block
 	
@@ -134,11 +152,14 @@ func can_move(coord, push_vec):
 				print("Can move ", coord, " in direction ", push_vec, " because ", nextCoord, " is the same color. ", block.color, " == ", other.color)
 				return true
 			else:
-				print("Can't move block at ", coord, " in direction ", push_vec, " because another block is in the way at ", nextCoord, ": ", other)
+				pass
+				#print("Can't move block at ", coord, " in direction ", push_vec, " because another block is in the way at ", nextCoord, ": ", other)
 		else:
-			print("Can't move block at ", coord, " in direction ", push_vec, " because it would be out of range (even for its face) at ", nextCoord)
+			pass
+			#print("Can't move block at ", coord, " in direction ", push_vec, " because it would be out of range (even for its face) at ", nextCoord)
 	else:
-		print("Can't move block at ", coord, " in direction ", push_vec, " because it would be out of coordinate range at ", nextCoord, " in worldSize ", world.Size)
+		pass
+		#print("Can't move block at ", coord, " in direction ", push_vec, " because it would be out of coordinate range at ", nextCoord, " in worldSize ", world.Size)
 	return false
 
 func is_same_color(blockA, blockB):
@@ -151,6 +172,6 @@ func move(coord, push_vec):
 
 # Internal function to apply a movement, issued from the world
 func apply_move(dest : Vector3):
-	print("Applying move from ", game_pos, " to ", dest)
+	#print("Applying move from ", game_pos, " to ", dest)
 	game_pos = dest
 	move_and_collide(dest - position)

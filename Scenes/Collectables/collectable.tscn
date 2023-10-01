@@ -1,0 +1,91 @@
+[gd_scene load_steps=12 format=3 uid="uid://b521uvvcqyndx"]
+
+[ext_resource type="Script" path="res://Scripts/collectable.gd" id="1_upfje"]
+[ext_resource type="QuadMesh" uid="uid://c4esl8pb1mm3k" path="res://Materials/sparkle_particle_draw_pass.tres" id="2_oj41f"]
+[ext_resource type="PackedScene" uid="uid://d15lh33r4tb6j" path="res://Scenes/Effects/indicatorizer.tscn" id="3_apr1t"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wum12"]
+radius = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qnm0u"]
+resource_local_to_scene = true
+transparency = 1
+blend_mode = 1
+shading_mode = 2
+albedo_color = Color(0.976471, 0, 0, 0.69)
+metallic = 0.55
+roughness = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_m2rye"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_qnm0u")
+radius = 0.35
+height = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iyo6o"]
+resource_local_to_scene = true
+albedo_color = Color(0.976471, 0, 0, 1)
+metallic = 1.0
+roughness = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_tmdpo"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_iyo6o")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="Gradient" id="Gradient_cj3k0"]
+offsets = PackedFloat32Array(0, 0.30597, 0.660448, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_j4d77"]
+gradient = SubResource("Gradient_cj3k0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wckdn"]
+resource_local_to_scene = true
+emission_shape = 2
+emission_sphere_radius = 0.35
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+damping_min = 0.9
+damping_max = 0.9
+color = Color(1, 0.5, 0.5, 1)
+color_ramp = SubResource("GradientTexture1D_j4d77")
+
+[node name="Collectable 1" type="Node3D" node_paths=PackedStringArray("transparent_sphere", "opaque_sphere", "particles", "indicator")]
+script = ExtResource("1_upfje")
+color = Color(0.976471, 0, 0, 1)
+fireworksEffectScene = "blue_fireworks.tscn"
+transparent_sphere = NodePath("Transparent")
+opaque_sphere = NodePath("Opaque")
+particles = NodePath("Particles")
+indicator = NodePath("Indicatorizer")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_wum12")
+
+[node name="Transparent" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_m2rye")
+
+[node name="Opaque" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_tmdpo")
+skeleton = NodePath("../Transparent")
+
+[node name="Particles" type="GPUParticles3D" parent="."]
+amount = 7
+lifetime = 3.0
+preprocess = 3.0
+explosiveness = 0.14
+randomness = 0.13
+visibility_aabb = AABB(-1, -1, -1, 2, 2, 2)
+process_material = SubResource("ParticleProcessMaterial_wckdn")
+draw_pass_1 = ExtResource("2_oj41f")
+
+[node name="Indicatorizer" parent="." instance=ExtResource("3_apr1t")]
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
